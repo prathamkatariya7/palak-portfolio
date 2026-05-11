@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palak Katariya — Artist · Creator · Visionary</title>
+  <meta name="description" content="Portfolio of Palak Katariya — a creative artist specializing in Resin Art, Gift Hamper Decorations, Rangoli, and Choreography.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Custom Cursor -->
+  <div id="cursorDot"></div>
+  <div id="cursorRing"></div>
+
+  <!-- Film Grain Overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">Palak<span>.</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero" class="active">Home</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#hero">Home</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- ========== HERO ========== -->
+  <section id="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-content">
+      <h1>
+        <span style="animation-delay:0.1s">Palak</span>&nbsp;
+        <span class="gold-text" style="animation-delay:0.25s">Katariya</span>
+      </h1>
+      <p class="hero-subtitle split-text">Artist ◆ Creator ◆ Visionary</p>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="arrow"></div>
+    </div>
+  </section>
+
+  <!-- ========== STATS BAR ========== -->
+  <div class="stats-bar">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <span class="stat-number" data-count="150">0+</span>
+        <span class="stat-label">Projects Completed</span>
+      </div>
+      <div class="stat-item reveal" data-delay="100">
+        <span class="stat-number" data-count="80">0+</span>
+        <span class="stat-label">Happy Clients</span>
+      </div>
+      <div class="stat-item reveal" data-delay="200">
+        <span class="stat-number" data-count="4">0+</span>
+        <span class="stat-label">Creative Skills</span>
+      </div>
+      <div class="stat-item reveal" data-delay="300">
+        <span class="stat-number" data-count="5">0+</span>
+        <span class="stat-label">Years Experience</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== GALLERY ========== -->
+  <section id="gallery" class="section-pad">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="accent-line"></div>
+        <h2>The Gallery</h2>
+        <p>A curated collection of artistry &amp; craft</p>
+      </div>
+
+      <div class="filter-tabs reveal">
+        <button class="filter-btn active" data-filter="all">All Works</button>
+        <button class="filter-btn" data-filter="resin">Resin Art</button>
+        <button class="filter-btn" data-filter="hamper">Gift Hampers</button>
+        <button class="filter-btn" data-filter="rangoli">Rangoli</button>
+        <button class="filter-btn" data-filter="choreography">Choreography</button>
+      </div>
+
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="gallery-card tall reveal" data-category="resin">
+          <img src="assets/resin-art-1.png" alt="Ocean Blue Resin Coasters" loading="lazy">
+          <div class="card-shine"></div>
+          <div class="card-overlay"><h3>Ocean Whisper</h3><span class="card-tag">Resin Art</span></div>
+        </div>
+        <div class="gallery-card reveal" data-category="hamper">
+          <img src="assets/gift-hamper-1.png" alt="Luxury Gift Hamper" loading="lazy">
+          <div class="card-shine"></div>
+          <div class="card-overlay"><h3>Golden Elegance</h3><span class="card-tag">Gift Hamper</span></div>
+        </div>
+        <div class="gallery-card reveal" data-category="rangoli">
+          <img src="assets/rangoli-1.png" alt="Traditional Rangoli Design" loading="lazy">
+          <div class="card-shine"></div>
+          <div class="card-overlay"><h3>Festival Bloom</h3><span class="card-tag">Rangoli</span></div>
+        </div>
+        <div class="gallery-card reveal" data-category="choreography">
+          <img src="assets/choreography-1.png" alt="Classical Dance Performance" loading="lazy">
+          <div class="card-shine"></div>
+          <div class="card-overlay"><h3>Rhythmic Grace</h3><span class="card-tag">Choreography</span></div>
+        </div>
+        <div class="gallery-card reveal" data-category="resin">
+          <img src="assets/resin-art-2.png" alt="Geode Resin Tray" loading="lazy">
+          <div class="card-shine"></div>
+          <div class="card-overlay"><h3>Amethyst Dreams</h3><span class="card-tag">Resin Art</span></div>
+        </div>
+        <div class="gallery-card tall reveal" data-category="rangoli">
+          <img src="assets/rangoli-2.png" alt="Peacock Rangoli Design" loading="lazy">
+          <div class="card-shine"></div>
+          <div class="card-overlay"><h3>Peacock Mandala</h3><span class="card-tag">Rangoli</span></div>
+        </div>
+        <div class="gallery-card reveal" data-category="hamper">
+          <img src="assets/gift-hamper-2.png" alt="Rustic Gift Basket" loading="lazy">
+          <div class="card-shine"></div>
+          <div class="card-overlay"><h3>Autumn Charm</h3><span class="card-tag">Gift Hamper</span></div>
+        </div>
+        <div class="gallery-card reveal" data-category="choreography">
+          <img src="assets/choreography-2.png" alt="Group Dance Performance" loading="lazy">
+          <div class="card-shine"></div>
+          <div class="card-overlay"><h3>Ensemble Energy</h3><span class="card-tag">Choreography</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROCESS ========== -->
+  <section id="process" class="section-pad">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="accent-line"></div>
+        <h2>How I Create</h2>
+        <p>The journey from vision to masterpiece</p>
+      </div>
+      <div class="process-progress reveal">
+        <div class="process-progress-bar" id="processProgressBar"></div>
+      </div>
+    </div>
+    <div class="process-track-wrapper" id="processTrack">
+      <div class="process-track">
+        <div class="process-card">
+          <div class="process-step">01</div>
+          <h3>Pour &amp; Flow</h3>
+          <span class="skill-label">Resin Art</span>
+          <p>Each resin piece begins with carefully selected pigments and metallic powders. I heat, mix, and pour layers of crystal-clear epoxy, manipulating depth and movement with a torch to create organic, ocean-inspired patterns. The curing process takes 48 hours of patience.</p>
+        </div>
+        <div class="process-card">
+          <div class="process-step">02</div>
+          <h3>Curate &amp; Layer</h3>
+          <span class="skill-label">Gift Hampers</span>
+          <p>Every hamper tells a story. I begin by sourcing premium elements — artisan treats, hand-tied ribbons, dried botanicals. The arrangement follows a layered composition principle: anchoring larger items at the base, building texture in the middle, and crowning with decorative accents.</p>
+        </div>
+        <div class="process-card">
+          <div class="process-step">03</div>
+          <h3>Trace &amp; Color</h3>
+          <span class="skill-label">Rangoli</span>
+          <p>Rangoli is meditation in motion. I start from the center outward, sketching geometric guides with chalk before filling intricate patterns with vibrant powders. Each design can take 3–6 hours, demanding steady hands and deep focus to achieve perfect symmetry.</p>
+        </div>
+        <div class="process-card">
+          <div class="process-step">04</div>
+          <h3>Move &amp; Express</h3>
+          <span class="skill-label">Choreography</span>
+          <p>Choreography starts with the music — I listen repeatedly until I feel the rhythm in my body. Then comes the mapping of formations, transitions, and emotional peaks. Rehearsals refine raw expression into polished performance, blending classical technique with contemporary energy.</p>
+        </div>
+      </div>
+    </div>
+    <p class="scroll-hint reveal">← Scroll or drag to explore →</p>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section id="contact" class="section-pad">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <h2>Let's Create<br>Together</h2>
+          <p class="sub">Open for commissions, collaborations &amp; creative partnerships</p>
+          <a href="tel:+919665444960" class="contact-item" id="contact-phone">
+            <div class="contact-icon">📞</div>
+            <div><div class="label">Phone</div><div class="value">+91 96654 44960</div></div>
+          </a>
+          <a href="mailto:palakkatariya555@gmail.com" class="contact-item" id="contact-email">
+            <div class="contact-icon">✉️</div>
+            <div><div class="label">Email</div><div class="value">palakkatariya555@gmail.com</div></div>
+          </a>
+        </div>
+        <div class="contact-decoration reveal">
+          <div class="deco-circle">
+            <div class="center-text">Art is<br>everywhere</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer-bar">
+    <p>&copy; 2026 Palak Katariya. Crafted with <span>♥</span> and creativity.</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">✕</button>
+    <img src="" alt="Lightbox preview" id="lightboxImg">
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

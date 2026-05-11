@@ -1,0 +1,513 @@
+/* ============================================
+   PALAK KATARIYA PORTFOLIO — APP.JS v2
+   Crystal Hero · Advanced UI/UX · Polished
+   ============================================ */
+
+(function () {
+  'use strict';
+
+  /* ---------- CUSTOM CURSOR ---------- */
+  function initCursor() {
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    if (!dot || !ring) return;
+
+    let mx = 0, my = 0;
+    let cx = 0, cy = 0;
+    let rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+    });
+
+    function tick() {
+      cx += (mx - cx) * 0.25;
+      cy += (my - cy) * 0.25;
+      rx += (mx - rx) * 0.08;
+      ry += (my - ry) * 0.08;
+      dot.style.transform = `translate(${cx}px, ${cy}px)`;
+      ring.style.transform = `translate(${rx}px, ${ry}px)`;
+      requestAnimationFrame(tick);
+    }
+    tick();
+
+    // Hover states
+    const hoverEls = document.querySelectorAll('a, button, .gallery-card, .filter-btn, .process-card');
+    hoverEls.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        dot.classList.add('cursor-hover');
+        ring.classList.add('cursor-hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        dot.classList.remove('cursor-hover');
+        ring.classList.remove('cursor-hover');
+      });
+    });
+  }
+
+  /* ---------- THREE.JS HERO — GOLDEN WIREFRAME DIAMOND ---------- */
+  function initHeroScene() {
+    const canvas = document.getElementById('hero-canvas');
+    if (!canvas || typeof THREE === 'undefined') return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.z = 7;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    /* --- Main Group (everything rotates together) --- */
+    const mainGroup = new THREE.Group();
+    scene.add(mainGroup);
+
+    /* --- Central Diamond (Icosahedron wireframe with golden glow) --- */
+    const diamondGeo = new THREE.IcosahedronGeometry(1.6, 1);
+
+    // Glowing wireframe
+    const wireMat = new THREE.MeshBasicMaterial({
+      color: 0xC9A96E,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.7,
+    });
+    const wireframe = new THREE.Mesh(diamondGeo, wireMat);
+    mainGroup.add(wireframe);
+
+    // Inner wireframe (smaller, brighter, counter-rotating)
+    const innerGeo = new THREE.IcosahedronGeometry(1.0, 1);
+    const innerMat = new THREE.MeshBasicMaterial({
+      color: 0xE8D5A8,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.4,
+    });
+    const innerWire = new THREE.Mesh(innerGeo, innerMat);
+    mainGroup.add(innerWire);
+
+    // Core glow sphere
+    const coreGeo = new THREE.SphereGeometry(0.3, 20, 20);
+    const coreMat = new THREE.MeshBasicMaterial({
+      color: 0xC9A96E,
+      transparent: true,
+      opacity: 0.35,
+    });
+    const core = new THREE.Mesh(coreGeo, coreMat);
+    mainGroup.add(core);
+
+
+
+    /* --- Vertex Points (bright dots at diamond vertices) --- */
+    const vertexPositions = diamondGeo.getAttribute('position');
+    const uniqueVerts = [];
+    const seen = new Set();
+    for (let i = 0; i < vertexPositions.count; i++) {
+      const key = `${vertexPositions.getX(i).toFixed(2)},${vertexPositions.getY(i).toFixed(2)},${vertexPositions.getZ(i).toFixed(2)}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        uniqueVerts.push(vertexPositions.getX(i), vertexPositions.getY(i), vertexPositions.getZ(i));
+      }
+    }
+    const vertGeo = new THREE.BufferGeometry();
+    vertGeo.setAttribute('position', new THREE.Float32BufferAttribute(uniqueVerts, 3));
+    const vertMat = new THREE.PointsMaterial({
+      color: 0xE8D5A8,
+      size: 0.06,
+      transparent: true,
+      opacity: 0.9,
+      sizeAttenuation: true,
+    });
+    const vertexPoints = new THREE.Points(vertGeo, vertMat);
+    mainGroup.add(vertexPoints);
+
+    /* --- Floating Star Particles --- */
+    const starCount = 300;
+    const starGeo = new THREE.BufferGeometry();
+    const starPos = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      const r = 4 + Math.random() * 8;
+      starPos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      starPos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      starPos[i * 3 + 2] = r * Math.cos(phi);
+    }
+    starGeo.setAttribute('position', new THREE.Float32BufferAttribute(starPos, 3));
+    const starMat = new THREE.PointsMaterial({
+      color: 0xE8D5A8,
+      size: 0.015,
+      transparent: true,
+      opacity: 0.5,
+      sizeAttenuation: true,
+    });
+    const stars = new THREE.Points(starGeo, starMat);
+    scene.add(stars);
+
+    /* --- Orbit Dots (particles along the rings) --- */
+    const orbitGroup = new THREE.Group();
+    mainGroup.add(orbitGroup);
+    const orbitDotCount = 40;
+    const orbitDotGeo = new THREE.BufferGeometry();
+    const orbitDotPos = new Float32Array(orbitDotCount * 3);
+    for (let i = 0; i < orbitDotCount; i++) {
+      const angle = (i / orbitDotCount) * Math.PI * 2;
+      const r = 2.4 + Math.random() * 1.2;
+      orbitDotPos[i * 3] = Math.cos(angle) * r;
+      orbitDotPos[i * 3 + 1] = (Math.random() - 0.5) * 0.8;
+      orbitDotPos[i * 3 + 2] = Math.sin(angle) * r;
+    }
+    orbitDotGeo.setAttribute('position', new THREE.Float32BufferAttribute(orbitDotPos, 3));
+    const orbitDotMat = new THREE.PointsMaterial({
+      color: 0xC9A96E,
+      size: 0.035,
+      transparent: true,
+      opacity: 0.7,
+      sizeAttenuation: true,
+    });
+    const orbitDots = new THREE.Points(orbitDotGeo, orbitDotMat);
+    orbitGroup.add(orbitDots);
+
+    /* --- Mouse tracking --- */
+    let mouseX = 0, mouseY = 0;
+    let smoothX = 0, smoothY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+    });
+
+    /* --- Animation Loop --- */
+    function animate() {
+      requestAnimationFrame(animate);
+      const t = performance.now() * 0.001;
+
+      smoothX += (mouseX - smoothX) * 0.04;
+      smoothY += (mouseY - smoothY) * 0.04;
+
+      // Main group rotation (mouse-reactive)
+      mainGroup.rotation.y = t * 0.12 + smoothX * 0.5;
+      mainGroup.rotation.x = smoothY * 0.3;
+
+      // Inner wireframe counter-rotates
+      innerWire.rotation.y = -t * 0.18;
+      innerWire.rotation.x = t * 0.1;
+
+      // Vertex points follow outer wireframe
+      vertexPoints.rotation.copy(wireframe.rotation);
+
+      // Floating animation
+      mainGroup.position.y = Math.sin(t * 0.4) * 0.12;
+
+
+
+      // Orbit dots spin
+      orbitGroup.rotation.y = t * 0.08;
+      orbitGroup.rotation.x = Math.sin(t * 0.2) * 0.1;
+
+      // Core pulse
+      const pulse = 0.3 + Math.sin(t * 1.5) * 0.12;
+      coreMat.opacity = pulse;
+      const s = 0.9 + Math.sin(t * 1.5) * 0.15;
+      core.scale.set(s, s, s);
+
+      // Wireframe opacity breathe
+      wireMat.opacity = 0.55 + Math.sin(t * 0.6) * 0.15;
+
+      // Background stars drift
+      stars.rotation.y = t * 0.008;
+      stars.rotation.x = t * 0.003;
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  }
+
+  /* ---------- NAVBAR ---------- */
+  function initNavbar() {
+    const navbar = document.getElementById('navbar');
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    const sections = document.querySelectorAll('section[id]');
+
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+
+    document.querySelectorAll('.mobile-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          document.querySelectorAll('#navLinks a').forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+    sections.forEach(s => observer.observe(s));
+  }
+
+  /* ---------- STAGGERED REVEAL ---------- */
+  function initReveal() {
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const delay = entry.target.dataset.delay || 0;
+          setTimeout(() => entry.target.classList.add('visible'), Number(delay));
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach((el, i) => {
+      if (!el.dataset.delay) el.dataset.delay = i * 60;
+      observer.observe(el);
+    });
+  }
+
+  /* ---------- GALLERY FILTER ---------- */
+  function initGalleryFilter() {
+    const btns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.gallery-card');
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+
+        cards.forEach((card, i) => {
+          const match = filter === 'all' || card.dataset.category === filter;
+          card.style.transitionDelay = `${i * 50}ms`;
+          if (match) {
+            card.classList.remove('hidden');
+            card.style.position = '';
+            card.style.visibility = '';
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+  }
+
+  /* ---------- 3D TILT + SHINE ON GALLERY CARDS ---------- */
+  function initTiltEffect() {
+    const cards = document.querySelectorAll('.gallery-card');
+
+    cards.forEach(card => {
+      const shine = card.querySelector('.card-shine');
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        const rotY = ((x - cx) / cx) * 10;
+        const rotX = ((cy - y) / cy) * 10;
+
+        card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.03)`;
+        card.style.boxShadow = `${-rotY * 2}px ${rotX * 2}px 50px rgba(201,169,110,0.18)`;
+
+        // Shine glare effect
+        if (shine) {
+          const px = (x / rect.width) * 100;
+          const py = (y / rect.height) * 100;
+          shine.style.background = `radial-gradient(circle at ${px}% ${py}%, rgba(255,255,255,0.25) 0%, transparent 60%)`;
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.boxShadow = '';
+        if (shine) shine.style.background = 'transparent';
+      });
+    });
+  }
+
+  /* ---------- LIGHTBOX ---------- */
+  function initLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    document.querySelectorAll('.gallery-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const img = card.querySelector('img');
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function close() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    lightboxClose.addEventListener('click', close);
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  }
+
+  /* ---------- PROCESS — WHEEL→HORIZONTAL SCROLL ---------- */
+  function initProcessScroll() {
+    const section = document.getElementById('process');
+    const wrapper = document.getElementById('processTrack');
+    const bar = document.getElementById('processProgressBar');
+    if (!section || !wrapper || !bar) return;
+
+    // Convert wheel to horizontal scroll
+    wrapper.addEventListener('wheel', (e) => {
+      const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+      if (maxScroll <= 0) return;
+
+      const atStart = wrapper.scrollLeft <= 0 && e.deltaY < 0;
+      const atEnd = wrapper.scrollLeft >= maxScroll - 1 && e.deltaY > 0;
+
+      if (!atStart && !atEnd) {
+        e.preventDefault();
+        wrapper.scrollLeft += e.deltaY * 1.5;
+      }
+    }, { passive: false });
+
+    // Progress bar
+    wrapper.addEventListener('scroll', () => {
+      const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+      const pct = maxScroll > 0 ? (wrapper.scrollLeft / maxScroll) * 100 : 0;
+      bar.style.width = pct + '%';
+    });
+
+    // Drag to scroll
+    let isDragging = false, startX, scrollLeft;
+    wrapper.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.pageX - wrapper.offsetLeft;
+      scrollLeft = wrapper.scrollLeft;
+      wrapper.style.cursor = 'grabbing';
+    });
+    wrapper.addEventListener('mouseup', () => { isDragging = false; wrapper.style.cursor = 'grab'; });
+    wrapper.addEventListener('mouseleave', () => { isDragging = false; wrapper.style.cursor = ''; });
+    wrapper.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - wrapper.offsetLeft;
+      wrapper.scrollLeft = scrollLeft - (x - startX) * 1.5;
+    });
+  }
+
+  /* ---------- HERO PARALLAX ---------- */
+  function initHeroParallax() {
+    const heroContent = document.querySelector('.hero-content');
+    const scrollInd = document.querySelector('.scroll-indicator');
+    if (!heroContent) return;
+
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      const h = window.innerHeight;
+      if (y < h) {
+        const r = y / h;
+        heroContent.style.transform = `translateY(${y * 0.35}px)`;
+        heroContent.style.opacity = 1 - r * 1.3;
+        if (scrollInd) scrollInd.style.opacity = Math.max(0, 1 - r * 3);
+      }
+    });
+  }
+
+  /* ---------- MAGNETIC BUTTONS ---------- */
+  function initMagnetic() {
+    document.querySelectorAll('.filter-btn, .contact-item').forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const dx = e.clientX - (rect.left + rect.width / 2);
+        const dy = e.clientY - (rect.top + rect.height / 2);
+        el.style.transform = `translate(${dx * 0.15}px, ${dy * 0.15}px)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = '';
+        el.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        setTimeout(() => el.style.transition = '', 500);
+      });
+    });
+  }
+
+  /* ---------- TEXT SPLIT ANIMATION ---------- */
+  function initTextSplit() {
+    document.querySelectorAll('.split-text').forEach(el => {
+      const text = el.textContent;
+      el.textContent = '';
+      el.style.visibility = 'visible';
+      [...text].forEach((char, i) => {
+        const span = document.createElement('span');
+        span.textContent = char === ' ' ? '\u00A0' : char;
+        span.style.animationDelay = `${0.6 + i * 0.035}s`;
+        span.className = 'split-char';
+        el.appendChild(span);
+      });
+    });
+  }
+
+  /* ---------- SMOOTH COUNTER ---------- */
+  function initCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    if (!counters.length) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.count, 10);
+          let current = 0;
+          const step = Math.max(1, Math.floor(target / 60));
+          const tick = () => {
+            current += step;
+            if (current >= target) { el.textContent = target + '+'; return; }
+            el.textContent = current + '+';
+            requestAnimationFrame(tick);
+          };
+          tick();
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => observer.observe(c));
+  }
+
+  /* ---------- INIT ---------- */
+  document.addEventListener('DOMContentLoaded', () => {
+    initCursor();
+    initHeroScene();
+    initNavbar();
+    initReveal();
+    initGalleryFilter();
+    initTiltEffect();
+    initLightbox();
+    initProcessScroll();
+    initHeroParallax();
+    initMagnetic();
+    initTextSplit();
+    initCounters();
+  });
+
+})();
