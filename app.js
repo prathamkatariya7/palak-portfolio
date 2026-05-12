@@ -272,6 +272,9 @@
   const GALLERY_IMAGES = [
     // Resin Art
     { src: 'assets/Resign Arts/img_1.png', category: 'resin', title: 'Oceanic Essence', tag: 'Resin Art' },
+    { src: 'assets/Resign Arts/img_2.png', category: 'resin', title: 'Marble Mystique', tag: 'Resin Art' },
+    { src: 'assets/Resign Arts/img_3.png', category: 'resin', title: 'Crystal Flow', tag: 'Resin Art' },
+    { src: 'assets/Resign Arts/img_4.png', category: 'resin', title: 'Ethereal Pour', tag: 'Resin Art' },
     
     // Gift Hampers
     { src: 'assets/Gift Hampers/img_1.png', category: 'hamper', title: 'Royal Celebration', tag: 'Gift Hamper' },
