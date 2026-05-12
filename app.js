@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  /* ---------- LUXURY GALLERY DATA ---------- */
+  /* ---------- GALLERY DATA (PRODUCTION READY) ---------- */
   const GALLERY_IMAGES = [
     { src: 'assets/resin-art/img_1.png', category: 'resin', title: 'Oceanic Essence', tag: 'Resin Art' },
     { src: 'assets/resin-art/img_2.png', category: 'resin', title: 'Marble Mystique', tag: 'Resin Art' },
@@ -12,12 +12,6 @@
     { src: 'assets/gift-hampers/img_3.png', category: 'hamper', title: 'Golden Festive', tag: 'Gift Hamper' },
     { src: 'assets/gift-hampers/img_4.png', category: 'hamper', title: 'Classic Elegance', tag: 'Gift Hamper' },
     { src: 'assets/gift-hampers/img_5.png', category: 'hamper', title: 'Premium Curations', tag: 'Gift Hamper' },
-    { src: 'assets/gift-hampers/img_6.png', category: 'hamper', title: 'Luxury Hamper', tag: 'Gift Hamper' },
-    { src: 'assets/gift-hampers/img_7.png', category: 'hamper', title: 'Floral Delight', tag: 'Gift Hamper' },
-    { src: 'assets/gift-hampers/img_8.jpeg', category: 'hamper', title: 'Festive Pack', tag: 'Gift Hamper' },
-    { src: 'assets/gift-hampers/img_9.jpeg', category: 'hamper', title: 'Sweet Curation', tag: 'Gift Hamper' },
-    { src: 'assets/gift-hampers/img_10.jpeg', category: 'hamper', title: 'Gift Ensemble', tag: 'Gift Hamper' },
-    { src: 'assets/gift-hampers/img_11.jpeg', category: 'hamper', title: 'Grand Selection', tag: 'Gift Hamper' },
     { src: 'assets/rangoli/img_1.png', category: 'rangoli', title: 'Sacred Mandala', tag: 'Rangoli' },
     { src: 'assets/rangoli/img_2.png', category: 'rangoli', title: 'Floral Symphony', tag: 'Rangoli' },
     { src: 'assets/rangoli/img_3.png', category: 'rangoli', title: 'Vibrant Harmony', tag: 'Rangoli' },
@@ -25,20 +19,59 @@
     { src: 'assets/rangoli/img_5.png', category: 'rangoli', title: 'Celestial Pattern', tag: 'Rangoli' }
   ];
 
-  const DISPLAY_LIMIT = 6;
-  let currentFilter = 'all';
+  /* ---------- 3D HERO ENGINE (THREE.JS) ---------- */
+  function init3DEngine() {
+    const canvas = document.getElementById('hero-canvas');
+    if (!canvas) return;
 
-  /* ---------- DYNAMIC GALLERY BUILDER ---------- */
-  function initDynamicGallery() {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Create Golden Wireframe Crystal
+    const geometry = new THREE.IcosahedronGeometry(2, 0);
+    const material = new THREE.MeshBasicMaterial({ 
+      color: 0xD4AF37, 
+      wireframe: true, 
+      transparent: true, 
+      opacity: 0.3 
+    });
+    const crystal = new THREE.Mesh(geometry, material);
+    scene.add(crystal);
+
+    camera.position.z = 5;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      crystal.rotation.y += 0.003;
+      crystal.rotation.x += 0.002;
+      
+      // Floating effect
+      crystal.position.y = Math.sin(Date.now() * 0.001) * 0.2;
+      
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  }
+
+  /* ---------- BENTO GALLERY BUILDER ---------- */
+  function initBentoGallery() {
     const grid = document.getElementById('galleryGrid');
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
     if (!grid) return;
 
     GALLERY_IMAGES.forEach((img, i) => {
       const card = document.createElement('div');
       card.className = 'gallery-card reveal';
-      card.dataset.category = img.category;
-      
       card.innerHTML = `
         <img src="${img.src}" alt="${img.title}" loading="lazy">
         <div class="card-overlay">
@@ -47,70 +80,6 @@
         </div>
       `;
       grid.appendChild(card);
-    });
-
-    loadMoreBtn.addEventListener('click', () => {
-      const hidden = document.querySelectorAll('.gallery-card.limit-hidden');
-      hidden.forEach((card, i) => {
-        setTimeout(() => {
-          card.classList.remove('limit-hidden');
-          card.style.display = 'block';
-          setTimeout(() => card.classList.add('visible'), 50);
-        }, i * 100);
-      });
-      document.getElementById('loadMoreContainer').style.display = 'none';
-    });
-
-    refreshGalleryDisplay();
-    initLightbox();
-  }
-
-  function refreshGalleryDisplay() {
-    const cards = document.querySelectorAll('.gallery-card');
-    const loadMoreContainer = document.getElementById('loadMoreContainer');
-    let count = 0;
-
-    cards.forEach(card => {
-      card.classList.remove('visible', 'limit-hidden');
-      card.style.display = 'none';
-      
-      const match = currentFilter === 'all' || card.dataset.category === currentFilter;
-      if (match) {
-        count++;
-        if (count <= DISPLAY_LIMIT) {
-          card.style.display = 'block';
-          setTimeout(() => card.classList.add('visible'), 100);
-        } else {
-          card.classList.add('limit-hidden');
-        }
-      }
-    });
-
-    loadMoreContainer.style.display = (count > DISPLAY_LIMIT) ? 'flex' : 'none';
-  }
-
-  /* ---------- LUXURY FILTER SYSTEM ---------- */
-  function initGalleryFilter() {
-    const btns = document.querySelectorAll('.filter-btn');
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        btns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentFilter = btn.dataset.filter;
-        refreshGalleryDisplay();
-      });
-    });
-  }
-
-  /* ---------- NAVIGATION REFINEMENT ---------- */
-  function initNavbar() {
-    const nav = document.getElementById('mainNav');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
     });
   }
 
@@ -127,31 +96,52 @@
     reveals.forEach(el => observer.observe(el));
   }
 
+  /* ---------- NAV PILL LOGIC ---------- */
+  function initNavPill() {
+    const nav = document.querySelector('.nav-pill-container');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > lastScroll && currentScroll > 200) {
+        nav.style.transform = 'translateY(-150%)';
+      } else {
+        nav.style.transform = 'translateY(0)';
+      }
+      lastScroll = currentScroll;
+    });
+  }
+
   /* ---------- LIGHTBOX ---------- */
   function initLightbox() {
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightboxImg');
     const lbClose = document.getElementById('lightboxClose');
 
-    document.querySelectorAll('.gallery-card').forEach(card => {
-      card.addEventListener('click', () => {
+    document.addEventListener('click', (e) => {
+      const card = e.target.closest('.gallery-card');
+      if (card) {
         lbImg.src = card.querySelector('img').src;
         lb.classList.add('open');
-      });
+      }
     });
 
-    lbClose.addEventListener('click', () => lb.classList.remove('open'));
-    lb.addEventListener('click', (e) => {
+    lbClose?.addEventListener('click', () => lb.classList.remove('open'));
+    lb?.addEventListener('click', (e) => {
       if (e.target === lb) lb.classList.remove('open');
     });
   }
 
   /* ---------- INIT MASTERPIECE ---------- */
   document.addEventListener('DOMContentLoaded', () => {
-    initNavbar();
-    initDynamicGallery();
-    initGalleryFilter();
+    init3DEngine();
+    initBentoGallery();
     initReveal();
+    initNavPill();
+    initLightbox();
+    
+    // ENSURE SYSTEM CURSOR IS ALWAYS VISIBLE
+    document.body.style.cursor = 'default';
   });
 
 })();

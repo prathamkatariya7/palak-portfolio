@@ -1,29 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Palak Katariya — Artist · Creator · Visionary</title>
-  <meta name="description" content="Portfolio of Palak Katariya — a creative artist specializing in Resin Art, Gift Hamper Decorations, Rangoli, and Choreography.">
-  <link rel="stylesheet" href="style.css?v=3.0">
+  <title>Palak Katariya — Digital Exhibition</title>
+  <meta name="description" content="A curated digital exhibition of artist Palak Katariya.">
+  <link rel="stylesheet" href="style.css?v=5.0">
 </head>
 <body>
+  <!-- CINEMATIC GRAIN -->
+  <div class="grain-overlay"></div>
 
-  <nav class="nav-container" id="mainNav">
-    <div class="nav-content">
-      <a href="#" class="logo">Palak<span>.</span></a>
-      <div class="nav-links">
-        <a href="#home" class="active">Home</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#process">Process</a>
-        <a href="#contact">Contact</a>
+  <!-- FLOATING PILL NAV -->
+  <div class="nav-pill-container">
+    <nav class="nav-pill">
+      <a href="#hero" class="nav-brand">P<span>.</span></a>
+      <div class="nav-items">
+        <a href="#gallery">Works</a>
+        <a href="#process">Journey</a>
+        <a href="#contact">Connect</a>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </div>
 
   <!-- ========== HERO ========== -->
   <section id="hero">
+    <canvas id="hero-canvas"></canvas>
     <div class="hero-content">
-      <p class="hero-subtitle reveal">Artist ◆ Creator ◆ Visionary</p>
-      <h1 class="reveal">Palak Katariya</h1>
+      <div class="hero-badge reveal">Est. 2024 ◆ Artist</div>
+      <h1 class="reveal">Palak<br><span class="gold-gradient">Katariya</span></h1>
+      <p class="hero-subtitle reveal">Designing the Extraordinary</p>
+    </div>
+    <div class="scroll-hint">
+      <div class="mouse"></div>
     </div>
   </section>
 
@@ -158,6 +167,7 @@
     <img id="lightboxImg" src="" alt="">
   </div>
 
-  <script src="app.js?v=3.0"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="app.js?v=5.0"></script>
 </body>
 </html>
