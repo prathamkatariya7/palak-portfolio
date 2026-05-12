@@ -303,6 +303,7 @@
     GALLERY_IMAGES.forEach((img, i) => {
       const card = document.createElement('div');
       const isTall = i % 3 === 0 || i % 7 === 0;
+      // We use 'reveal' but we will trigger it manually to be safe
       card.className = `gallery-card ${isTall ? 'tall' : ''} reveal`;
       card.dataset.category = img.category;
       card.dataset.delay = i * 40;
@@ -318,13 +319,19 @@
       grid.appendChild(card);
     });
 
-    // Force a check for reveals after adding elements
+    // Force visibility for gallery cards specifically
     setTimeout(() => {
-      initReveal();
+      const cards = document.querySelectorAll('.gallery-card');
+      cards.forEach((card, i) => {
+        setTimeout(() => {
+          card.classList.add('visible');
+        }, i * 30);
+      });
+      
       initGalleryFilter();
       initTiltEffect();
       initLightbox();
-    }, 100);
+    }, 200);
   }
 
   /* ---------- STAGGERED REVEAL ---------- */
