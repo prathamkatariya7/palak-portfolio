@@ -6,45 +6,6 @@
 (function () {
   'use strict';
 
-  /* ---------- CUSTOM CURSOR ---------- */
-  function initCursor() {
-    const dot = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    if (!dot || !ring) return;
-
-    let mx = 0, my = 0;
-    let cx = 0, cy = 0;
-    let rx = 0, ry = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mx = e.clientX;
-      my = e.clientY;
-    });
-
-    function tick() {
-      cx += (mx - cx) * 0.25;
-      cy += (my - cy) * 0.25;
-      rx += (mx - rx) * 0.08;
-      ry += (my - ry) * 0.08;
-      dot.style.transform = `translate(${cx}px, ${cy}px)`;
-      ring.style.transform = `translate(${rx}px, ${ry}px)`;
-      requestAnimationFrame(tick);
-    }
-    tick();
-
-    // Hover states
-    const hoverEls = document.querySelectorAll('a, button, .gallery-card, .filter-btn, .process-card');
-    hoverEls.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        dot.classList.add('cursor-hover');
-        ring.classList.add('cursor-hover');
-      });
-      el.addEventListener('mouseleave', () => {
-        dot.classList.remove('cursor-hover');
-        ring.classList.remove('cursor-hover');
-      });
-    });
-  }
 
   /* ---------- THREE.JS HERO — GOLDEN WIREFRAME DIAMOND ---------- */
   function initHeroScene() {
@@ -623,18 +584,14 @@
 
   /* ---------- INIT ---------- */
   document.addEventListener('DOMContentLoaded', () => {
-    initCursor();
     initHeroScene();
     initNavbar();
     initReveal();
     initDynamicGallery();
-    initTiltEffect();
-    initLightbox();
-    initProcessScroll();
     initHeroParallax();
     initMagnetic();
     initTextSplit();
     initCounters();
+    initProcessScroll();
   });
-
 })();
