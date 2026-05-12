@@ -270,19 +270,19 @@
 
   /* ---------- DYNAMIC GALLERY DATA ---------- */
   const GALLERY_IMAGES = [
-    // Resin Art
-    { src: 'assets/Resign Arts/img_1.png', category: 'resin', title: 'Oceanic Essence', tag: 'Resin Art' },
-    { src: 'assets/Resign Arts/img_2.png', category: 'resin', title: 'Marble Mystique', tag: 'Resin Art' },
-    { src: 'assets/Resign Arts/img_3.png', category: 'resin', title: 'Crystal Flow', tag: 'Resin Art' },
-    { src: 'assets/Resign Arts/img_4.png', category: 'resin', title: 'Ethereal Pour', tag: 'Resin Art' },
+    // Resin Art (Resign Arts folder)
+    { src: 'assets/Resign%20Arts/img_1.png', category: 'resin', title: 'Oceanic Essence', tag: 'Resin Art' },
+    { src: 'assets/Resign%20Arts/img_2.png', category: 'resin', title: 'Marble Mystique', tag: 'Resin Art' },
+    { src: 'assets/Resign%20Arts/img_3.png', category: 'resin', title: 'Crystal Flow', tag: 'Resin Art' },
+    { src: 'assets/Resign%20Arts/img_4.png', category: 'resin', title: 'Ethereal Pour', tag: 'Resin Art' },
     
     // Gift Hampers
-    { src: 'assets/Gift Hampers/img_1.png', category: 'hamper', title: 'Royal Celebration', tag: 'Gift Hamper' },
-    { src: 'assets/Gift Hampers/img_2.png', category: 'hamper', title: 'Artisan Selection', tag: 'Gift Hamper' },
-    { src: 'assets/Gift Hampers/img_3.png', category: 'hamper', title: 'Golden Festive', tag: 'Gift Hamper' },
-    { src: 'assets/Gift Hampers/img_4.png', category: 'hamper', title: 'Classic Elegance', tag: 'Gift Hamper' },
-    { src: 'assets/Gift Hampers/img_5.png', category: 'hamper', title: 'Premium Curations', tag: 'Gift Hamper' },
-    { src: 'assets/Gift Hampers/img_6.png', category: 'hamper', title: 'Luxury Hamper', tag: 'Gift Hamper' },
+    { src: 'assets/Gift%20Hampers/img_1.png', category: 'hamper', title: 'Royal Celebration', tag: 'Gift Hamper' },
+    { src: 'assets/Gift%20Hampers/img_2.png', category: 'hamper', title: 'Artisan Selection', tag: 'Gift Hamper' },
+    { src: 'assets/Gift%20Hampers/img_3.png', category: 'hamper', title: 'Golden Festive', tag: 'Gift Hamper' },
+    { src: 'assets/Gift%20Hampers/img_4.png', category: 'hamper', title: 'Classic Elegance', tag: 'Gift Hamper' },
+    { src: 'assets/Gift%20Hampers/img_5.png', category: 'hamper', title: 'Premium Curations', tag: 'Gift Hamper' },
+    { src: 'assets/Gift%20Hampers/img_6.png', category: 'ham hamper', title: 'Luxury Hamper', tag: 'Gift Hamper' },
 
     // Rangoli
     { src: 'assets/Rangoli/img_1.png', category: 'rangoli', title: 'Sacred Mandala', tag: 'Rangoli' },
@@ -297,7 +297,6 @@
 
     GALLERY_IMAGES.forEach((img, i) => {
       const card = document.createElement('div');
-      // Assign 'tall' class to specific indices for a premium masonry look
       const isTall = i % 3 === 0 || i % 7 === 0;
       card.className = `gallery-card ${isTall ? 'tall' : ''} reveal`;
       card.dataset.category = img.category;
@@ -314,10 +313,13 @@
       grid.appendChild(card);
     });
 
-    // Run dependencies that need the cards in DOM
-    initGalleryFilter();
-    initTiltEffect();
-    initLightbox();
+    // Force a check for reveals after adding elements
+    setTimeout(() => {
+      initReveal();
+      initGalleryFilter();
+      initTiltEffect();
+      initLightbox();
+    }, 100);
   }
 
   /* ---------- STAGGERED REVEAL ---------- */
