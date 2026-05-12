@@ -49,8 +49,8 @@ body {
 
 .nav-pill {
   background: var(--pill-bg);
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   padding: 0.8rem 2rem;
   border-radius: 100px;
   border: 1px solid var(--glass-border);
@@ -58,6 +58,14 @@ body {
   align-items: center;
   gap: 3rem;
   box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, #fff 0%, var(--gold-primary) 50%, #fff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
 }
 
 .nav-brand {
@@ -129,21 +137,41 @@ body {
   margin-bottom: 2rem;
 }
 
-.gold-gradient {
-  background: linear-gradient(135deg, #fff 0%, var(--gold-primary) 50%, #fff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: block;
+/* ---------- LUXURY SCROLL HINT ---------- */
+.scroll-hint {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 
-.hero-subtitle {
-  font-size: 1.1rem;
-  letter-spacing: 15px;
-  text-transform: uppercase;
-  color: var(--text-muted);
+.mouse {
+  width: 25px;
+  height: 45px;
+  border: 2px solid var(--text-muted);
+  border-radius: 20px;
+  position: relative;
 }
 
-/* ---------- BENTO GALLERY ---------- */
+.mouse::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  background: var(--gold-primary);
+  border-radius: 2px;
+  transform: translateX(-50%);
+  animation: scrollAnim 2s infinite;
+}
+
+@keyframes scrollAnim {
+  0% { transform: translate(-50%, 0); opacity: 0; }
+  50% { transform: translate(-50%, 15px); opacity: 1; }
+  100% { transform: translate(-50%, 30px); opacity: 0; }
+}
 .section-pad { padding: 150px 5%; }
 
 .gallery-grid {
@@ -248,7 +276,17 @@ body {
 }
 
 /* Lightbox & Reveal */
-#lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+#lightbox { 
+  position: fixed; 
+  inset: 0; 
+  background: rgba(0,0,0,0.9); 
+  display: none; 
+  z-index: 2000; 
+  align-items: center; 
+  justify-content: center; 
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px); 
+}
 #lightbox.open { display: flex; }
 #lightboxImg { max-width: 90%; max-height: 80vh; border-radius: 20px; }
 #lightboxClose { position: absolute; top: 30px; right: 30px; color: #fff; font-size: 2rem; cursor: pointer; }

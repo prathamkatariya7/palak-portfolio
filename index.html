@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Palak Katariya — Digital Exhibition</title>
   <meta name="description" content="A curated digital exhibition of artist Palak Katariya.">
-  <link rel="stylesheet" href="style.css?v=5.0">
+  <link rel="stylesheet" href="style.css?v=6.0">
 </head>
 <body>
   <!-- CINEMATIC GRAIN -->
@@ -14,7 +14,7 @@
   <!-- FLOATING PILL NAV -->
   <div class="nav-pill-container">
     <nav class="nav-pill">
-      <a href="#hero" class="nav-brand">P<span>.</span></a>
+      <a href="#" class="nav-brand">P<span>.</span></a>
       <div class="nav-items">
         <a href="#gallery">Works</a>
         <a href="#process">Journey</a>
@@ -36,35 +36,12 @@
     </div>
   </section>
 
-  <!-- ========== STATS BAR ========== -->
-  <div class="stats-bar">
-    <div class="stats-grid">
-      <div class="stat-item reveal">
-        <span class="stat-number" data-count="150">0+</span>
-        <span class="stat-label">Projects Completed</span>
-      </div>
-      <div class="stat-item reveal" data-delay="100">
-        <span class="stat-number" data-count="80">0+</span>
-        <span class="stat-label">Happy Clients</span>
-      </div>
-      <div class="stat-item reveal" data-delay="200">
-        <span class="stat-number" data-count="4">0+</span>
-        <span class="stat-label">Creative Skills</span>
-      </div>
-      <div class="stat-item reveal" data-delay="300">
-        <span class="stat-number" data-count="5">0+</span>
-        <span class="stat-label">Years Experience</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========== GALLERY ========== -->
+  <!-- ========== WORKS (BENTO GALLERY) ========== -->
   <section id="gallery" class="section-pad">
     <div class="container">
       <div class="section-header reveal">
-        <div class="accent-line"></div>
-        <h2>The Gallery</h2>
-        <p>A curated collection of artistry &amp; craft</p>
+        <p class="hero-subtitle">Selected Works</p>
+        <h2>The Collection</h2>
       </div>
 
       <div class="filter-tabs reveal">
@@ -75,19 +52,12 @@
       </div>
 
       <div class="gallery-grid" id="galleryGrid">
-        <!-- Dynamic images will be injected here by app.js -->
-      </div>
-
-      <div class="load-more-container reveal" id="loadMoreContainer">
-        <button class="load-more-btn" id="loadMoreBtn">
-          <span>Explore Full Collection</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
-        </button>
+        <!-- Injected by JS -->
       </div>
     </div>
   </section>
 
-  <!-- ========== PROCESS SECTION (HORIZONTAL EXPERIENCE) ========== -->
+  <!-- ========== PROCESS SECTION ========== -->
   <section id="process" class="section-pad">
     <div class="container">
       <div class="section-header reveal">
@@ -97,33 +67,29 @@
       
       <div class="process-horizontal-container">
         <div class="process-track">
-          <!-- Step 01 -->
           <div class="process-card reveal">
             <span class="process-num">01</span>
             <h3>Pour & Flow</h3>
             <p class="process-cat">Resin Art</p>
-            <p>Layers of crystal-clear epoxy manipulated with fire and pigment to create organic, ocean-inspired patterns. A 48-hour journey of patience.</p>
+            <p>Layers of crystal-clear epoxy manipulated with fire and pigment. A 48-hour journey of patience.</p>
           </div>
-          <!-- Step 02 -->
           <div class="process-card reveal">
             <span class="process-num">02</span>
             <h3>Curate & Layer</h3>
             <p class="process-cat">Gift Hampers</p>
-            <p>Sourcing artisan treats and hand-tied ribbons to build a composition of texture, anchoring larger items at the base and crowning with botanicals.</p>
+            <p>Sourcing artisan treats and building a composition of texture and luxury.</p>
           </div>
-          <!-- Step 03 -->
           <div class="process-card reveal">
             <span class="process-num">03</span>
             <h3>Trace & Color</h3>
             <p class="process-cat">Rangoli</p>
-            <p>Meditation in motion. Sketching geometric guides with chalk before filling intricate patterns with vibrant powders. Symmetry in every grain.</p>
+            <p>Meditation in motion. Geometry and vibrant powders meeting in perfect symmetry.</p>
           </div>
-          <!-- Step 04 -->
           <div class="process-card reveal">
             <span class="process-num">04</span>
             <h3>Move & Express</h3>
             <p class="process-cat">Choreography</p>
-            <p>Mapping formations and emotional peaks to music. Blending classical technique with contemporary energy into a polished performance.</p>
+            <p>Blending classical technique with contemporary energy into a polished performance.</p>
           </div>
         </div>
       </div>
@@ -135,30 +101,40 @@
     <div class="container">
       <div class="contact-wrapper">
         <div class="contact-info reveal">
-          <h2>Let's Create<br>Together</h2>
-          <p class="sub">Open for commissions, collaborations &amp; creative partnerships</p>
-          <a href="tel:+919665444960" class="contact-item" id="contact-phone">
-            <div class="contact-icon">📞</div>
-            <div><div class="label">Phone</div><div class="value">+91 96654 44960</div></div>
-          </a>
-          <a href="mailto:palakkatariya555@gmail.com" class="contact-item" id="contact-email">
-            <div class="contact-icon">✉️</div>
-            <div><div class="label">Email</div><div class="value">palakkatariya555@gmail.com</div></div>
-          </a>
-        </div>
-        <div class="contact-decoration reveal">
-          <div class="deco-circle">
-            <div class="center-text">Art is<br>everywhere</div>
+          <p class="hero-subtitle">Get In Touch</p>
+          <h2>Let's Create<br>Something Iconic</h2>
+          <div class="contact-links">
+            <a href="mailto:hello@palak.art" class="contact-link-item">hello@palak.art</a>
+            <div class="social-links">
+              <a href="#">Instagram</a>
+              <a href="#">LinkedIn</a>
+              <a href="#">Behance</a>
+            </div>
           </div>
         </div>
+        
+        <form class="contact-form reveal">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" placeholder="Your Name">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="email@example.com">
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell me about your project..."></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Message</button>
+        </form>
       </div>
     </div>
   </section>
 
-  <footer class="footer-bar">
   <footer class="section-pad">
     <div class="container" style="text-align: center;">
-      <p style="color: var(--text-muted); font-size: 0.9rem; letter-spacing: 2px;">&copy; 2024 PALAK KATARIYA. ALL RIGHTS RESERVED.</p>
+      <p style="color: var(--text-muted); font-size: 0.8rem; letter-spacing: 3px;">&copy; 2024 PALAK KATARIYA. ALL RIGHTS RESERVED.</p>
     </div>
   </footer>
 
@@ -168,6 +144,6 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="app.js?v=5.0"></script>
+  <script src="app.js?v=6.0"></script>
 </body>
 </html>

@@ -64,22 +64,70 @@
     });
   }
 
+  let currentFilter = 'all';
+
   /* ---------- BENTO GALLERY BUILDER ---------- */
   function initBentoGallery() {
     const grid = document.getElementById('galleryGrid');
+    const filterBtns = document.querySelectorAll('.filter-btn');
     if (!grid) return;
 
-    GALLERY_IMAGES.forEach((img, i) => {
-      const card = document.createElement('div');
-      card.className = 'gallery-card reveal';
-      card.innerHTML = `
-        <img src="${img.src}" alt="${img.title}" loading="lazy">
-        <div class="card-overlay">
-          <span class="card-tag">${img.tag}</span>
-          <h3>${img.title}</h3>
-        </div>
-      `;
-      grid.appendChild(card);
+    function renderCards() {
+      grid.innerHTML = '';
+      const filtered = GALLERY_IMAGES.filter(img => 
+        currentFilter === 'all' || img.category === currentFilter
+      );
+
+      filtered.forEach((img, i) => {
+        const card = document.createElement('div');
+        card.className = 'gallery-card reveal';
+        card.innerHTML = `
+          <img src="${img.src}" alt="${img.title}" loading="lazy">
+          <div class="card-overlay">
+            <span class="card-tag">${img.tag}</span>
+            <h3>${img.title}</h3>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+      
+      // Re-trigger reveal after render
+      setTimeout(initReveal, 100);
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderCards();
+      });
+    });
+
+    renderCards();
+  }
+
+  /* ---------- MAGNETIC NAV PILL ---------- */
+  function initMagneticNav() {
+    const pill = document.querySelector('.nav-pill');
+    if (!pill) return;
+
+    window.addEventListener('mousemove', (e) => {
+      const rect = pill.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      const distanceX = e.clientX - centerX;
+      const distanceY = e.clientY - centerY;
+      const distance = Math.sqrt(distanceX**2 + distanceY**2);
+
+      if (distance < 150) {
+        const moveX = distanceX * 0.15;
+        const moveY = distanceY * 0.15;
+        pill.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      } else {
+        pill.style.transform = `translate(0, 0)`;
+      }
     });
   }
 
@@ -138,6 +186,7 @@
     initBentoGallery();
     initReveal();
     initNavPill();
+    initMagneticNav();
     initLightbox();
     
     // ENSURE SYSTEM CURSOR IS ALWAYS VISIBLE
