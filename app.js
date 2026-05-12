@@ -296,14 +296,17 @@
     { src: 'assets/rangoli/img_4.png', category: 'rangoli', title: 'Peacock Bloom', tag: 'Rangoli' }
   ];
 
+  const DISPLAY_LIMIT = 6;
+  let currentFilter = 'all';
+
   function initDynamicGallery() {
     const grid = document.getElementById('galleryGrid');
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
     if (!grid) return;
 
     GALLERY_IMAGES.forEach((img, i) => {
       const card = document.createElement('div');
       const isTall = i % 3 === 0 || i % 7 === 0;
-      // We use 'reveal' but we will trigger it manually to be safe
       card.className = `gallery-card ${isTall ? 'tall' : ''} reveal`;
       card.dataset.category = img.category;
       card.dataset.delay = i * 40;
@@ -319,19 +322,75 @@
       grid.appendChild(card);
     });
 
-    // Force visibility for gallery cards specifically
-    setTimeout(() => {
-      const cards = document.querySelectorAll('.gallery-card');
-      cards.forEach((card, i) => {
-        setTimeout(() => {
-          card.classList.add('visible');
-        }, i * 30);
-      });
+    // Load More Button Listener
+    loadMoreBtn.addEventListener('click', () => {
+      const targetCards = (currentFilter === 'all') 
+        ? document.querySelectorAll('.gallery-card.limit-hidden')
+        : document.querySelectorAll(`.gallery-card.limit-hidden[data-category="${currentFilter}"]`);
       
-      initGalleryFilter();
+      targetCards.forEach((card, i) => {
+        card.classList.remove('limit-hidden');
+        card.style.display = '';
+        setTimeout(() => card.classList.add('visible'), i * 30);
+      });
+      document.getElementById('loadMoreContainer').classList.add('hidden');
+    });
+
+    refreshGalleryDisplay();
+
+    // Init dependencies
+    setTimeout(() => {
       initTiltEffect();
       initLightbox();
     }, 200);
+  }
+
+  function refreshGalleryDisplay() {
+    const cards = document.querySelectorAll('.gallery-card');
+    const loadMoreContainer = document.getElementById('loadMoreContainer');
+    let totalInFilter = 0;
+
+    cards.forEach((card) => {
+      const match = currentFilter === 'all' || card.dataset.category === currentFilter;
+      
+      if (match) {
+        totalInFilter++;
+        if (totalInFilter <= DISPLAY_LIMIT) {
+          card.classList.remove('limit-hidden', 'hidden');
+          card.style.display = '';
+          setTimeout(() => card.classList.add('visible'), 50);
+        } else {
+          card.classList.add('limit-hidden');
+          card.classList.remove('visible');
+          card.style.display = 'none';
+        }
+      } else {
+        card.classList.add('hidden');
+        card.classList.remove('visible', 'limit-hidden');
+        card.style.display = 'none';
+      }
+    });
+
+    // Show/Hide load more button
+    if (totalInFilter > DISPLAY_LIMIT) {
+      loadMoreContainer.classList.remove('hidden');
+      loadMoreContainer.classList.add('visible');
+    } else {
+      loadMoreContainer.classList.add('hidden');
+    }
+  }
+
+  /* ---------- GALLERY FILTER ---------- */
+  function initGalleryFilter() {
+    const btns = document.querySelectorAll('.filter-btn');
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        refreshGalleryDisplay();
+      });
+    });
   }
 
   /* ---------- STAGGERED REVEAL ---------- */
@@ -349,32 +408,6 @@
     reveals.forEach((el, i) => {
       if (!el.dataset.delay) el.dataset.delay = i * 60;
       observer.observe(el);
-    });
-  }
-
-  /* ---------- GALLERY FILTER ---------- */
-  function initGalleryFilter() {
-    const btns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.gallery-card');
-
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        btns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-
-        cards.forEach((card, i) => {
-          const match = filter === 'all' || card.dataset.category === filter;
-          card.style.transitionDelay = `${i * 50}ms`;
-          if (match) {
-            card.classList.remove('hidden');
-            card.style.position = '';
-            card.style.visibility = '';
-          } else {
-            card.classList.add('hidden');
-          }
-        });
-      });
     });
   }
 
