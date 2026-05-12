@@ -323,6 +323,18 @@
       grid.appendChild(card);
     });
 
+    // Magnetic Button Effect
+    loadMoreBtn.addEventListener('mousemove', (e) => {
+      const rect = loadMoreBtn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      loadMoreBtn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+    });
+
+    loadMoreBtn.addEventListener('mouseleave', () => {
+      loadMoreBtn.style.transform = '';
+    });
+
     // Load More Button Listener
     loadMoreBtn.addEventListener('click', () => {
       const targetCards = (currentFilter === 'all') 
@@ -331,8 +343,14 @@
       
       targetCards.forEach((card, i) => {
         card.classList.remove('limit-hidden');
-        card.style.display = '';
-        setTimeout(() => card.classList.add('visible'), i * 30);
+        card.style.position = 'relative';
+        card.style.visibility = 'visible';
+        card.style.display = 'block';
+        
+        // Waterfall animation
+        setTimeout(() => {
+          card.classList.add('waterfall-in');
+        }, i * 60);
       });
       document.getElementById('loadMoreContainer').classList.add('hidden');
     });
@@ -351,18 +369,26 @@
     const loadMoreContainer = document.getElementById('loadMoreContainer');
     let totalInFilter = 0;
 
+    // Reset button visibility
+    loadMoreContainer.classList.remove('hidden');
+
     cards.forEach((card) => {
+      card.classList.remove('waterfall-in'); // Reset animation
       const match = currentFilter === 'all' || card.dataset.category === currentFilter;
       
       if (match) {
         totalInFilter++;
         if (totalInFilter <= DISPLAY_LIMIT) {
           card.classList.remove('limit-hidden', 'hidden');
-          card.style.display = '';
+          card.style.position = 'relative';
+          card.style.visibility = 'visible';
+          card.style.display = 'block';
           setTimeout(() => card.classList.add('visible'), 50);
         } else {
           card.classList.add('limit-hidden');
           card.classList.remove('visible');
+          card.style.position = 'absolute';
+          card.style.visibility = 'hidden';
           card.style.display = 'none';
         }
       } else {
@@ -374,10 +400,11 @@
 
     // Show/Hide load more button
     if (totalInFilter > DISPLAY_LIMIT) {
-      loadMoreContainer.classList.remove('hidden');
-      loadMoreContainer.classList.add('visible');
+      loadMoreContainer.style.display = 'flex';
+      setTimeout(() => loadMoreContainer.classList.remove('hidden'), 50);
     } else {
       loadMoreContainer.classList.add('hidden');
+      setTimeout(() => loadMoreContainer.style.display = 'none', 400);
     }
   }
 
