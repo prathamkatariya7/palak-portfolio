@@ -1,52 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Palak Katariya — Artist · Creator · Visionary</title>
   <meta name="description" content="Portfolio of Palak Katariya — a creative artist specializing in Resin Art, Gift Hamper Decorations, Rangoli, and Choreography.">
-  <link rel="stylesheet" href="style.css?v=2.1">
+  <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 <body>
-  <!-- NOISE OVERLAY (Cinematic Texture) -->
-  <div class="noise"></div>
 
-  <nav class="nav-container">
+  <nav class="nav-container" id="mainNav">
     <div class="nav-content">
       <a href="#" class="logo">Palak<span>.</span></a>
-      <div class="nav-links" id="navLinks">
+      <div class="nav-links">
         <a href="#home" class="active">Home</a>
         <a href="#gallery">Gallery</a>
         <a href="#process">Process</a>
         <a href="#contact">Contact</a>
       </div>
-      <div class="hamburger" id="hamburger">
-        <span></span><span></span><span></span>
-      </div>
     </div>
   </nav>
 
-  <!-- Mobile Nav Overlay -->
-  <div class="mobile-nav" id="mobileNav">
-    <a href="#hero">Home</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#process">Process</a>
-    <a href="#contact">Contact</a>
-  </div>
-
   <!-- ========== HERO ========== -->
   <section id="hero">
-    <canvas id="hero-canvas"></canvas>
     <div class="hero-content">
-      <h1>
-        <span style="animation-delay:0.1s">Palak</span>&nbsp;
-        <span class="gold-text" style="animation-delay:0.25s">Katariya</span>
-      </h1>
-      <p class="hero-subtitle split-text">Artist ◆ Creator ◆ Visionary</p>
-    </div>
-    <div class="scroll-indicator">
-      <span>Scroll</span>
-      <div class="arrow"></div>
+      <p class="hero-subtitle reveal">Artist ◆ Creator ◆ Visionary</p>
+      <h1 class="reveal">Palak Katariya</h1>
     </div>
   </section>
 
@@ -170,16 +147,17 @@
   </section>
 
   <footer class="footer-bar">
-    <p>&copy; 2026 Palak Katariya. Crafted with <span>♥</span> and creativity.</p>
+  <footer class="section-pad">
+    <div class="container" style="text-align: center;">
+      <p style="color: var(--text-muted); font-size: 0.9rem; letter-spacing: 2px;">&copy; 2024 PALAK KATARIYA. ALL RIGHTS RESERVED.</p>
+    </div>
   </footer>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">✕</button>
-    <img src="" alt="Lightbox preview" id="lightboxImg">
+  <div id="lightbox">
+    <span id="lightboxClose">&times;</span>
+    <img id="lightboxImg" src="" alt="">
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="app.js?v=2.1"></script>
+  <script src="app.js?v=3.0"></script>
 </body>
 </html>
