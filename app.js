@@ -588,6 +588,7 @@
     initNavbar();
     initReveal();
     initDynamicGallery();
+    initGalleryFilter(); // RESTORED: This was missing!
     initHeroParallax();
     initMagnetic();
     initTextSplit();
