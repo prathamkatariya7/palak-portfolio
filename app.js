@@ -268,6 +268,55 @@
     sections.forEach(s => observer.observe(s));
   }
 
+  /* ---------- DYNAMIC GALLERY DATA ---------- */
+  const GALLERY_IMAGES = [
+    // Resin Art
+    { src: 'assets/Resign Arts/img_1.png', category: 'resin', title: 'Oceanic Essence', tag: 'Resin Art' },
+    
+    // Gift Hampers
+    { src: 'assets/Gift Hampers/img_1.png', category: 'hamper', title: 'Royal Celebration', tag: 'Gift Hamper' },
+    { src: 'assets/Gift Hampers/img_2.png', category: 'hamper', title: 'Artisan Selection', tag: 'Gift Hamper' },
+    { src: 'assets/Gift Hampers/img_3.png', category: 'hamper', title: 'Golden Festive', tag: 'Gift Hamper' },
+    { src: 'assets/Gift Hampers/img_4.png', category: 'hamper', title: 'Classic Elegance', tag: 'Gift Hamper' },
+    { src: 'assets/Gift Hampers/img_5.png', category: 'hamper', title: 'Premium Curations', tag: 'Gift Hamper' },
+    { src: 'assets/Gift Hampers/img_6.png', category: 'hamper', title: 'Luxury Hamper', tag: 'Gift Hamper' },
+
+    // Rangoli
+    { src: 'assets/Rangoli/img_1.png', category: 'rangoli', title: 'Sacred Mandala', tag: 'Rangoli' },
+    { src: 'assets/Rangoli/img_2.png', category: 'rangoli', title: 'Floral Symphony', tag: 'Rangoli' },
+    { src: 'assets/Rangoli/img_3.png', category: 'rangoli', title: 'Vibrant Harmony', tag: 'Rangoli' },
+    { src: 'assets/Rangoli/img_4.png', category: 'rangoli', title: 'Peacock Bloom', tag: 'Rangoli' }
+  ];
+
+  function initDynamicGallery() {
+    const grid = document.getElementById('galleryGrid');
+    if (!grid) return;
+
+    GALLERY_IMAGES.forEach((img, i) => {
+      const card = document.createElement('div');
+      // Assign 'tall' class to specific indices for a premium masonry look
+      const isTall = i % 3 === 0 || i % 7 === 0;
+      card.className = `gallery-card ${isTall ? 'tall' : ''} reveal`;
+      card.dataset.category = img.category;
+      card.dataset.delay = i * 40;
+
+      card.innerHTML = `
+        <img src="${img.src}" alt="${img.title}" loading="lazy">
+        <div class="card-shine"></div>
+        <div class="card-overlay">
+          <h3>${img.title}</h3>
+          <span class="card-tag">${img.tag}</span>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    // Run dependencies that need the cards in DOM
+    initGalleryFilter();
+    initTiltEffect();
+    initLightbox();
+  }
+
   /* ---------- STAGGERED REVEAL ---------- */
   function initReveal() {
     const reveals = document.querySelectorAll('.reveal');
@@ -500,7 +549,7 @@
     initHeroScene();
     initNavbar();
     initReveal();
-    initGalleryFilter();
+    initDynamicGallery();
     initTiltEffect();
     initLightbox();
     initProcessScroll();
