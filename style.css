@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 
-* { cursor: auto !important; }
-a, button, [role="button"], .gallery-card, .filter-btn { cursor: pointer !important; }
-
 :root {
   --gold: #C9A96E;
   --gold-light: #E8D5A8;
@@ -23,9 +20,36 @@ a, button, [role="button"], .gallery-card, .filter-btn { cursor: pointer !import
   --bounce: cubic-bezier(0.34,1.56,0.64,1);
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--charcoal-deep);
+  color: var(--pearl);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: default; /* ENSURE STANDARD CURSOR */
+}
+
+a, button, .filter-btn, .gallery-card {
+  cursor: pointer;
+}
+
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--gold) var(--charcoal-deep)}
-body{font-family:var(--font-body);background:var(--charcoal-deep);color:var(--pearl);overflow-x:hidden;line-height:1.7;-webkit-font-smoothing:antialiased;cursor:none}
+body {
+  font-family: var(--font-body);
+  background: var(--charcoal-deep);
+  color: var(--pearl);
+  overflow-x: hidden;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  cursor: default !important; /* RESTORED */
+}
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:var(--charcoal-deep)}
 ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}

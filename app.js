@@ -330,42 +330,35 @@
     const loadMoreContainer = document.getElementById('loadMoreContainer');
     let totalInFilter = 0;
 
-    // Reset button visibility
-    loadMoreContainer.classList.remove('hidden');
-
     cards.forEach((card) => {
-      card.classList.remove('waterfall-in'); // Reset animation
+      // Clear all potential hidden/animation classes first
+      card.classList.remove('waterfall-in', 'visible', 'limit-hidden', 'hidden');
+      card.style.display = 'none';
+
       const match = currentFilter === 'all' || card.dataset.category === currentFilter;
       
       if (match) {
         totalInFilter++;
         if (totalInFilter <= DISPLAY_LIMIT) {
-          card.classList.remove('limit-hidden', 'hidden');
+          card.style.display = 'block';
           card.style.position = 'relative';
           card.style.visibility = 'visible';
-          card.style.display = 'block';
-          setTimeout(() => card.classList.add('visible'), 50);
+          // Force a tiny delay for the fade-in effect
+          setTimeout(() => card.classList.add('visible'), 10);
         } else {
           card.classList.add('limit-hidden');
-          card.classList.remove('visible');
-          card.style.position = 'absolute';
-          card.style.visibility = 'hidden';
           card.style.display = 'none';
         }
-      } else {
-        card.classList.add('hidden');
-        card.classList.remove('visible', 'limit-hidden');
-        card.style.display = 'none';
       }
     });
 
     // Show/Hide load more button
     if (totalInFilter > DISPLAY_LIMIT) {
       loadMoreContainer.style.display = 'flex';
-      setTimeout(() => loadMoreContainer.classList.remove('hidden'), 50);
+      loadMoreContainer.classList.remove('hidden');
     } else {
+      loadMoreContainer.style.display = 'none';
       loadMoreContainer.classList.add('hidden');
-      setTimeout(() => loadMoreContainer.style.display = 'none', 400);
     }
   }
 
