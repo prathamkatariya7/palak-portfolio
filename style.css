@@ -1,98 +1,100 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;900&display=swap');
-
 :root {
-  --bg-deep: #050508;
-  --bg-card: #0D0D15;
+  --bg-deep: #030305;
+  --bg-card: rgba(15, 15, 25, 0.6);
   --gold-primary: #D4AF37;
-  --gold-glow: rgba(212, 175, 55, 0.3);
+  --gold-glow: rgba(212, 175, 55, 0.4);
   --text-main: #FFFFFF;
-  --text-muted: #808090;
-  --pill-bg: rgba(20, 20, 30, 0.6);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-muted: #707080;
+  --pill-bg: rgba(10, 10, 15, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  
+  /* Expert GenZ Typography */
   --font-display: 'Playfair Display', serif;
   --font-sans: 'Outfit', sans-serif;
+  --tracking-tight: -0.06em;
+  
   --expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ---------- GEN Z BASE ---------- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
+/* ---------- HEAD OF DESIGN REFINEMENTS ---------- */
 body {
   background: var(--bg-deep);
   color: var(--text-main);
   font-family: var(--font-sans);
   overflow-x: hidden;
-  cursor: default !important; /* RESTORED SYSTEM ARROW */
+  cursor: default !important; /* ALWAYS KEEP SYSTEM ARROW */
 }
 
-/* Cinematic Grain */
-.grain-overlay {
+/* Magnetic Aura (Not a cursor, just a background glow) */
+.cursor-aura {
   position: fixed;
-  inset: 0;
-  z-index: 9999;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+  border-radius: 50%;
   pointer-events: none;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  z-index: 0;
+  mix-blend-mode: screen;
+  transition: transform 0.2s var(--expo);
+  filter: blur(40px);
+  opacity: 0.5;
 }
 
-/* ---------- FLOATING PILL NAV ---------- */
-.nav-pill-container {
-  position: fixed;
-  top: 2rem;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  z-index: 1000;
+/* Kinetic Typography */
+h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: var(--tracking-tight);
+  line-height: 0.85;
+}
+
+.hero-badge {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  color: var(--gold-primary);
+  border: 1px solid var(--gold-primary);
+  padding: 0.4rem 1.2rem;
+  border-radius: 100px;
+  margin-bottom: 2rem;
+  display: inline-block;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* 3D Bento Response */
+.gallery-card {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.gallery-card img {
   transition: transform 0.6s var(--expo);
 }
 
-.nav-pill {
-  background: var(--pill-bg);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  padding: 0.8rem 2rem;
-  border-radius: 100px;
+.gallery-card:hover img {
+  transform: translateZ(30px) scale(1.1);
+}
+
+/* Luxury Process Track */
+.process-track {
+  display: flex;
+  gap: 4rem;
+  padding: 2rem 0;
+}
+
+.process-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   border: 1px solid var(--glass-border);
-  display: flex;
-  align-items: center;
-  gap: 3rem;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  transition: 0.6s var(--expo);
 }
 
-.gold-gradient {
-  background: linear-gradient(135deg, #fff 0%, var(--gold-primary) 50%, #fff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: block;
-}
-
-.nav-brand {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 900;
-  color: #fff;
-  text-decoration: none;
-}
-
-.nav-brand span { color: var(--gold-primary); }
-
-.nav-items {
-  display: flex;
-  gap: 2rem;
-}
-
-.nav-items a {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: 0.3s var(--expo);
-}
-
-.nav-items a:hover { color: var(--gold-primary); }
+/* Scrollbar Fixes */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--gold-primary); border-radius: 10px; }
 
 /* ---------- GEN Z HERO ---------- */
 #hero {

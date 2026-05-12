@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  /* ---------- GALLERY DATA (PRODUCTION READY) ---------- */
+  /* ---------- PRODUCTION DATA ---------- */
   const GALLERY_IMAGES = [
     { src: 'assets/resin-art/img_1.png', category: 'resin', title: 'Oceanic Essence', tag: 'Resin Art' },
     { src: 'assets/resin-art/img_2.png', category: 'resin', title: 'Marble Mystique', tag: 'Resin Art' },
@@ -19,8 +19,21 @@
     { src: 'assets/rangoli/img_5.png', category: 'rangoli', title: 'Celestial Pattern', tag: 'Rangoli' }
   ];
 
-  /* ---------- 3D HERO ENGINE (THREE.JS) ---------- */
-  function init3DEngine() {
+  /* ---------- DESIGNER AURA ENGINE ---------- */
+  function initDesignerAura() {
+    const aura = document.getElementById('cursorAura');
+    if (!aura) return;
+
+    window.addEventListener('mousemove', (e) => {
+      // Smooth following with delay for "premium" weight
+      const x = e.clientX - 200;
+      const y = e.clientY - 200;
+      aura.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    });
+  }
+
+  /* ---------- GENERATIVE 3D BACKGROUND ---------- */
+  function initLiquidEngine() {
     const canvas = document.getElementById('hero-canvas');
     if (!canvas) return;
 
@@ -31,32 +44,32 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // Create Golden Wireframe Crystal
-    const geometry = new THREE.IcosahedronGeometry(2, 0);
-    const material = new THREE.MeshBasicMaterial({ 
-      color: 0xD4AF37, 
-      wireframe: true, 
-      transparent: true, 
-      opacity: 0.3 
+    // Create Organic Mesh
+    const geometry = new THREE.TorusKnotGeometry(1.5, 0.4, 200, 32);
+    const material = new THREE.MeshNormalMaterial({ 
+      wireframe: true,
+      transparent: true,
+      opacity: 0.15
     });
-    const crystal = new THREE.Mesh(geometry, material);
-    scene.add(crystal);
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
 
     camera.position.z = 5;
 
     function animate() {
       requestAnimationFrame(animate);
-      crystal.rotation.y += 0.003;
-      crystal.rotation.x += 0.002;
+      mesh.rotation.y += 0.002;
+      mesh.rotation.x += 0.001;
       
-      // Floating effect
-      crystal.position.y = Math.sin(Date.now() * 0.001) * 0.2;
+      // Liquid pulse
+      const time = Date.now() * 0.001;
+      mesh.scale.setScalar(1 + Math.sin(time) * 0.05);
       
       renderer.render(scene, camera);
     }
 
     animate();
-
+    
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -64,9 +77,31 @@
     });
   }
 
+  /* ---------- BENTO 3D TILT ---------- */
+  function initBentoTilt() {
+    document.addEventListener('mousemove', (e) => {
+      const cards = document.querySelectorAll('.gallery-card');
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
+          const xc = rect.width / 2;
+          const yc = rect.height / 2;
+          const dx = x - xc;
+          const dy = y - yc;
+          card.style.transform = `perspective(1000px) rotateY(${dx / 20}deg) rotateX(${-dy / 20}deg) scale(0.98)`;
+        } else {
+          card.style.transform = '';
+        }
+      });
+    });
+  }
+
+  /* ---------- GALLERY SYSTEM ---------- */
   let currentFilter = 'all';
 
-  /* ---------- BENTO GALLERY BUILDER ---------- */
   function initBentoGallery() {
     const grid = document.getElementById('galleryGrid');
     const filterBtns = document.querySelectorAll('.filter-btn');
@@ -74,9 +109,7 @@
 
     function renderCards() {
       grid.innerHTML = '';
-      const filtered = GALLERY_IMAGES.filter(img => 
-        currentFilter === 'all' || img.category === currentFilter
-      );
+      const filtered = GALLERY_IMAGES.filter(img => currentFilter === 'all' || img.category === currentFilter);
 
       filtered.forEach((img, i) => {
         const card = document.createElement('div');
@@ -90,8 +123,6 @@
         `;
         grid.appendChild(card);
       });
-      
-      // Re-trigger reveal after render
       setTimeout(initReveal, 100);
     }
 
@@ -107,87 +138,24 @@
     renderCards();
   }
 
-  /* ---------- MAGNETIC NAV PILL ---------- */
-  function initMagneticNav() {
-    const pill = document.querySelector('.nav-pill');
-    if (!pill) return;
-
-    window.addEventListener('mousemove', (e) => {
-      const rect = pill.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      
-      const distanceX = e.clientX - centerX;
-      const distanceY = e.clientY - centerY;
-      const distance = Math.sqrt(distanceX**2 + distanceY**2);
-
-      if (distance < 150) {
-        const moveX = distanceX * 0.15;
-        const moveY = distanceY * 0.15;
-        pill.style.transform = `translate(${moveX}px, ${moveY}px)`;
-      } else {
-        pill.style.transform = `translate(0, 0)`;
-      }
-    });
-  }
-
-  /* ---------- CINEMATIC REVEAL ---------- */
+  /* ---------- CORE UTILS ---------- */
   function initReveal() {
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); }
       });
     }, { threshold: 0.1 });
     reveals.forEach(el => observer.observe(el));
   }
 
-  /* ---------- NAV PILL LOGIC ---------- */
-  function initNavPill() {
-    const nav = document.querySelector('.nav-pill-container');
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', () => {
-      const currentScroll = window.pageYOffset;
-      if (currentScroll > lastScroll && currentScroll > 200) {
-        nav.style.transform = 'translateY(-150%)';
-      } else {
-        nav.style.transform = 'translateY(0)';
-      }
-      lastScroll = currentScroll;
-    });
-  }
-
-  /* ---------- LIGHTBOX ---------- */
-  function initLightbox() {
-    const lb = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lightboxImg');
-    const lbClose = document.getElementById('lightboxClose');
-
-    document.addEventListener('click', (e) => {
-      const card = e.target.closest('.gallery-card');
-      if (card) {
-        lbImg.src = card.querySelector('img').src;
-        lb.classList.add('open');
-      }
-    });
-
-    lbClose?.addEventListener('click', () => lb.classList.remove('open'));
-    lb?.addEventListener('click', (e) => {
-      if (e.target === lb) lb.classList.remove('open');
-    });
-  }
-
   /* ---------- INIT MASTERPIECE ---------- */
   document.addEventListener('DOMContentLoaded', () => {
-    init3DEngine();
+    initDesignerAura();
+    initLiquidEngine();
     initBentoGallery();
+    initBentoTilt();
     initReveal();
-    initNavPill();
-    initMagneticNav();
-    initLightbox();
     
     // ENSURE SYSTEM CURSOR IS ALWAYS VISIBLE
     document.body.style.cursor = 'default';
