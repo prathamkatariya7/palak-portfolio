@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Palak Katariya — Digital Exhibition</title>
   <meta name="description" content="A curated digital exhibition of artist Palak Katariya.">
-  <link rel="stylesheet" href="style.css?v=7.0">
+  <link rel="stylesheet" href="style.css?v=8.0">
 </head>
 <body>
   <!-- DESIGNER AURA -->
   <div class="cursor-aura" id="cursorAura"></div>
-
-  <!-- CINEMATIC GRAIN -->
   <div class="grain-overlay"></div>
 
   <!-- FLOATING PILL NAV -->
@@ -46,19 +44,19 @@
   <section id="gallery" class="section-pad">
     <div class="container">
       <div class="section-header reveal">
-        <p class="hero-subtitle">Selected Works</p>
-        <h2>The Collection</h2>
+        <p class="hero-subtitle">The Portfolio</p>
+        <h2>Selected Works</h2>
       </div>
 
       <div class="filter-tabs reveal">
         <button class="filter-btn active" data-filter="all">All Works</button>
         <button class="filter-btn" data-filter="resin">Resin Art</button>
-        <button class="filter-btn" data-filter="hamper">Gift Hampers</button>
+        <button class="filter-btn" data-filter="hamper">Hampers</button>
         <button class="filter-btn" data-filter="rangoli">Rangoli</button>
       </div>
 
       <div class="gallery-grid" id="galleryGrid">
-        <!-- Injected by JS -->
+        <!-- 20+ Images Injected by JS -->
       </div>
     </div>
   </section>
@@ -76,25 +74,25 @@
           <div class="process-card reveal">
             <span class="process-num">01</span>
             <h3>Pour & Flow</h3>
-            <p class="process-cat">Resin Art</p>
+            <p class="process-cat" style="color:var(--gold-primary); font-size:0.7rem; letter-spacing:3px; margin-bottom:1rem;">RESIN ART</p>
             <p>Layers of crystal-clear epoxy manipulated with fire and pigment. A 48-hour journey of patience.</p>
           </div>
           <div class="process-card reveal">
             <span class="process-num">02</span>
             <h3>Curate & Layer</h3>
-            <p class="process-cat">Gift Hampers</p>
-            <p>Sourcing artisan treats and building a composition of texture and luxury.</p>
+            <p class="process-cat" style="color:var(--gold-primary); font-size:0.7rem; letter-spacing:3px; margin-bottom:1rem;">HAMPERS</p>
+            <p>Sourcing artisan treats and building a composition of texture and luxury for every occasion.</p>
           </div>
           <div class="process-card reveal">
             <span class="process-num">03</span>
             <h3>Trace & Color</h3>
-            <p class="process-cat">Rangoli</p>
+            <p class="process-cat" style="color:var(--gold-primary); font-size:0.7rem; letter-spacing:3px; margin-bottom:1rem;">RANGOLI</p>
             <p>Meditation in motion. Geometry and vibrant powders meeting in perfect symmetry.</p>
           </div>
           <div class="process-card reveal">
             <span class="process-num">04</span>
             <h3>Move & Express</h3>
-            <p class="process-cat">Choreography</p>
+            <p class="process-cat" style="color:var(--gold-primary); font-size:0.7rem; letter-spacing:3px; margin-bottom:1rem;">DANCE</p>
             <p>Blending classical technique with contemporary energy into a polished performance.</p>
           </div>
         </div>
@@ -105,12 +103,13 @@
   <!-- ========== CONTACT SECTION ========== -->
   <section id="contact" class="section-pad">
     <div class="container">
-      <div class="contact-wrapper">
-        <div class="contact-info reveal">
-          <p class="hero-subtitle">Get In Touch</p>
-          <h2>Let's Create<br>Something Iconic</h2>
-          <div class="contact-links">
-            <a href="mailto:hello@palak.art" class="contact-link-item">hello@palak.art</a>
+      <div class="contact-wrapper reveal">
+        <div class="contact-info">
+          <p class="hero-subtitle">Let's Connect</p>
+          <h2>Start a Project</h2>
+          <div class="contact-links" style="margin-top: 3rem;">
+            <a href="tel:+919665444960" class="contact-link-item">+91 96654 44960</a>
+            <a href="mailto:palakkatariya555@gmail.com" class="contact-link-item">palakkatariya555@gmail.com</a>
             <div class="social-links">
               <a href="#">Instagram</a>
               <a href="#">LinkedIn</a>
@@ -119,7 +118,7 @@
           </div>
         </div>
         
-        <form class="contact-form reveal">
+        <form class="contact-form">
           <div class="form-group">
             <label>Name</label>
             <input type="text" placeholder="Your Name">
@@ -130,7 +129,7 @@
           </div>
           <div class="form-group">
             <label>Message</label>
-            <textarea placeholder="Tell me about your project..."></textarea>
+            <textarea placeholder="Tell me about your vision..."></textarea>
           </div>
           <button type="submit" class="submit-btn">Send Message</button>
         </form>
@@ -140,16 +139,15 @@
 
   <footer class="section-pad">
     <div class="container" style="text-align: center;">
-      <p style="color: var(--text-muted); font-size: 0.8rem; letter-spacing: 3px;">&copy; 2024 PALAK KATARIYA. ALL RIGHTS RESERVED.</p>
+      <p style="color: var(--text-muted); font-size: 0.8rem; letter-spacing: 3px;">&copy; 2024 PALAK KATARIYA. DESIGNED FOR THE EXTRAORDINARY.</p>
     </div>
   </footer>
 
   <div id="lightbox">
-    <span id="lightboxClose">&times;</span>
     <img id="lightboxImg" src="" alt="">
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="app.js?v=6.0"></script>
+  <script src="app.js?v=8.0"></script>
 </body>
 </html>
