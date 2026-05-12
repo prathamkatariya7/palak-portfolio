@@ -279,10 +279,15 @@
     // Gift Hampers
     { src: 'assets/gift-hampers/img_1.png', category: 'hamper', title: 'Royal Celebration', tag: 'Gift Hamper' },
     { src: 'assets/gift-hampers/img_2.png', category: 'hamper', title: 'Artisan Selection', tag: 'Gift Hamper' },
-    { src: 'assets/gift-hampers/img_3.png', category: 'hamper', title: 'Golden Festive', tag: 'Gift Hamper' },
+    { src: 'assets/gift-hampers/img_3.png', category: 'hamper', title: 'Golden Festive', tag: 'Gift Ham hamper' },
     { src: 'assets/gift-hampers/img_4.png', category: 'hamper', title: 'Classic Elegance', tag: 'Gift Hamper' },
-    { src: 'assets/gift-hampers/img_5.png', category: 'hamper', title: 'Premium Curations', tag: 'Gift Hamper' },
+    { src: 'assets/gift-hampers/img_5.png', category: 'hamper', title: 'Premium Curations', tag: 'Gift Ham hamper' },
     { src: 'assets/gift-hampers/img_6.png', category: 'hamper', title: 'Luxury Hamper', tag: 'Gift Hamper' },
+    { src: 'assets/gift-hampers/img_7.png', category: 'hamper', title: 'Floral Delight', tag: 'Gift Hamper' },
+    { src: 'assets/gift-hampers/img_8.jpeg', category: 'hamper', title: 'Festive Pack', tag: 'Gift Hamper' },
+    { src: 'assets/gift-hampers/img_9.jpeg', category: 'hamper', title: 'Sweet Curation', tag: 'Gift Hamper' },
+    { src: 'assets/gift-hampers/img_10.jpeg', category: 'hamper', title: 'Gift Ensemble', tag: 'Gift Hamper' },
+    { src: 'assets/gift-hampers/img_11.jpeg', category: 'hamper', title: 'Grand Selection', tag: 'Gift Hamper' },
 
     // Rangoli
     { src: 'assets/rangoli/img_1.png', category: 'rangoli', title: 'Sacred Mandala', tag: 'Rangoli' },
