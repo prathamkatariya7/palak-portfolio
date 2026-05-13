@@ -104,9 +104,14 @@ body {
 .contact-link-item { display: block; font-family: var(--font-display); font-size: clamp(1.4rem, 4vw, 2.8rem); color: #fff !important; text-decoration: none; margin-bottom: 2rem; transition: 0.4s var(--expo); }
 .contact-link-item:hover { color: var(--gold-primary) !important; transform: translateX(15px); }
 
-/* ---------- ULTRA-ATTRACTIVE INSTAGRAM BRAND ---------- */
-.instagram-brand-button {
+/* ---------- ATTRACTIVE INSTAGRAM BUTTON ---------- */
+.solo-social {
+  margin-top: 3rem;
+}
+
+.instagram-button {
   display: inline-flex;
+  flex-direction: row;
   align-items: center;
   gap: 1.5rem;
   background: var(--pill-bg);
@@ -114,60 +119,47 @@ body {
   border-radius: 20px;
   border: 1px solid var(--glass-border);
   text-decoration: none;
-  transition: 0.6s var(--expo);
+  transition: 0.5s var(--expo);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  margin-top: 2rem;
+  animation: igPulse 3s infinite;
 }
 
-.insta-icon {
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
-  border-radius: 12px;
-  color: #fff;
-  transition: 0.4s var(--expo);
+@keyframes igPulse {
+  0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+  50% { box-shadow: 0 0 20px 5px rgba(212, 175, 55, 0.2); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
 }
 
-.insta-icon svg {
-  width: 24px;
-  height: 24px;
+.instagram-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--gold-primary);
+  transform: translateY(-8px) scale(1.02);
 }
 
-.insta-meta {
+.ig-icon {
+  color: var(--gold-primary);
+  stroke-width: 1.5px;
+}
+
+.btn-info {
   display: flex;
   flex-direction: column;
 }
 
-.insta-handle {
+.btn-text {
   color: #fff;
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 700;
   line-height: 1.2;
 }
 
-.insta-action {
+.btn-subtext {
   color: var(--gold-primary);
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin-top: 0.2rem;
-}
-
-.instagram-brand-button:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: #dc2743;
-  transform: translateY(-8px) scale(1.05);
-  box-shadow: 0 20px 40px rgba(220, 39, 67, 0.3);
-}
-
-.instagram-brand-button:hover .insta-icon {
-  transform: rotate(10deg) scale(1.1);
-  box-shadow: 0 0 20px rgba(220, 39, 67, 0.6);
 }
 
 .contact-form { flex: 1; max-width: 550px; width: 100%; }
